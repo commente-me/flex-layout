@@ -15,7 +15,7 @@ import {
   toSpacingValue
 } from "./modules/valuesParser";
 
-import styles from "./Row.css";
+import styles from "./styles/Row.css";
 
 enum ColSizing {
   equal = "equal",
