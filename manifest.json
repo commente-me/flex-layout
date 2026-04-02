@@ -1,0 +1,26 @@
+{
+  "vendor": "vtex",
+  "name": "flex-layout",
+  "version": "0.21.5",
+  "title": "VTEX flex layout component",
+  "defaultLocale": "pt-BR",
+  "description": "VTEX flex layout component",
+  "builders": {
+    "react": "3.x",
+    "store": "0.x",
+    "messages": "1.x",
+    "docs": "0.x"
+  },
+  "mustUpdateAt": "2020-04-02",
+  "categories": [],
+  "scripts": {
+    "postreleasy": "vtex publish --verbose"
+  },
+  "dependencies": {
+    "vtex.store-components": "3.x",
+    "vtex.device-detector": "0.x",
+    "vtex.responsive-values": "0.x",
+    "vtex.css-handles": "0.x"
+  },
+  "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
+}

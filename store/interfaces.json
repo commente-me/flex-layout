@@ -1,0 +1,15 @@
+{
+  "flex-layout": {
+    "component": "FlexLayoutDummy"
+  },
+  "flex-layout.row": {
+    "component": "FlexLayout",
+    "composition": "children",
+    "allowed": "*"
+  },
+  "flex-layout.col": {
+    "component": "Col",
+    "composition": "children",
+    "allowed": "*"
+  }
+}
