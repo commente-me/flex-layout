@@ -2,5 +2,6 @@
   "admin/editor.row.title": "Zeile",
   "admin/editor.column.title": "Spalte",
   "admin/editor.row.description": "Zeilenkomponente der Flex-Layoutstruktur",
-  "admin/editor.column.description": "Spaltenkomponente der Flex-Layoutstruktur"
+  "admin/editor.column.description": "Spaltenkomponente der Flex-Layoutstruktur",
+  "store/flex-layout.flexLayout-row.aria-label": "Abschnitt {sectionId, select, row {Zeile} other {#}}"
 }

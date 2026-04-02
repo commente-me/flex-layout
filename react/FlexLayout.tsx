@@ -39,6 +39,7 @@ const HorizontalAlignments = {
 };
 
 export interface Props extends Flex, Gap, Border {
+  children?: React.ReactNode;
   blockClass?: string;
   fullWidth?: boolean;
   arialabel?: string;

@@ -2,5 +2,6 @@
   "admin/editor.row.title": "Rând",
   "admin/editor.column.title": "Coloană",
   "admin/editor.row.description": "Componenta de rânduri a structurii modului de afișare flexibil",
-  "admin/editor.column.description": "Componenta de coloane a structurii modului de afișare flexibil"
+  "admin/editor.column.description": "Componenta de coloane a structurii modului de afișare flexibil",
+  "store/flex-layout.flexLayout-row.aria-label": "Secțiune {sectionId, select, row {rând} other {#}}"
 }

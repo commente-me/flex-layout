@@ -2,5 +2,6 @@
   "admin/editor.row.title": "行",
   "admin/editor.column.title": "列",
   "admin/editor.row.description": "フレックスレイアウト構造の行コンポーネント",
-  "admin/editor.column.description": "フレックスレイアウト構造の列コンポーネント"
+  "admin/editor.column.description": "フレックスレイアウト構造の列コンポーネント",
+  "store/flex-layout.flexLayout-row.aria-label": "セクション {sectionId, select, row {行} other {#}}"
 }
