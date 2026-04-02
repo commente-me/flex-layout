@@ -6,6 +6,7 @@
     "lib": ["es2017", "dom", "es2018.promise"],
     "module": "esnext",
     "moduleResolution": "node",
+    "ignoreDeprecations": "6.0",
     "noEmitOnError": false,
     "noImplicitAny": true,
     "noImplicitReturns": true,
