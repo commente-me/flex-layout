@@ -1,10 +1,10 @@
 {
-  "vendor": "vtex",
+  "vendor": "commente",
   "name": "flex-layout",
-  "version": "0.21.5",
-  "title": "VTEX flex layout component",
+  "version": "0.0.1",
+  "title": "commente.me flex layout component",
   "defaultLocale": "pt-BR",
-  "description": "VTEX flex layout component",
+  "description": "commente.me flex layout component",
   "builders": {
     "react": "3.x",
     "store": "0.x",

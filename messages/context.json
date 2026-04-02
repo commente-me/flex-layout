@@ -1,4 +1,4 @@
-{ 
+{
   "admin/editor.row.title": "Row",
   "admin/editor.column.title": "Column",
   "admin/editor.row.description": "Row component of flex layout structure",

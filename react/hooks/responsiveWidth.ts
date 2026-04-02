@@ -1,17 +1,17 @@
-import React, { ReactElement } from 'react'
-import { useDevice } from 'vtex.device-detector'
-import { parseWidth } from '../modules/valuesParser'
+import React, { ReactElement } from "react";
+import { useDevice } from "vtex.device-detector";
+import { parseWidth } from "../modules/valuesParser";
 
 interface DistributedWidthOptions {
-  preserveLayoutOnMobile?: boolean
-  hideEmptyCols?: boolean
+  preserveLayoutOnMobile?: boolean;
+  hideEmptyCols?: boolean;
 }
 
 interface ColWithWidth {
-  element: React.ReactNode
-  width: number | string
-  hasDefinedWidth: boolean
-  isResponsive: boolean
+  element: React.ReactNode;
+  width: number | string;
+  hasDefinedWidth: boolean;
+  isResponsive: boolean;
 }
 
 /** Distributes the available width--width that remains after subtracting
@@ -22,90 +22,76 @@ interface ColWithWidth {
  * There are 3 columns. The user sets the width for the first one to 50%.
  * This function will set the widths of the second and third columns to 25%.
  */
-const distributeAvailableWidth = (
-  cols: ColWithWidth[],
-  { hideEmptyCols = false } = {}
-) => {
+const distributeAvailableWidth = (cols: ColWithWidth[], { hideEmptyCols = false } = {}) => {
   const { availableWidth, remainingColsNum, hasAnyWidthGrow } = cols.reduce(
     (acc, col) => {
-      const isGrow = col.width === 'grow'
-      const width =
-        typeof col.width === 'number' ? acc.availableWidth - col.width : 0
+      const isGrow = col.width === "grow";
+      const width = typeof col.width === "number" ? acc.availableWidth - col.width : 0;
 
       return {
         availableWidth: isGrow ? 0 : width,
         remainingColsNum: acc.remainingColsNum + (col.hasDefinedWidth ? 0 : 1),
-        hasAnyWidthGrow: acc.hasAnyWidthGrow || isGrow,
-      }
+        hasAnyWidthGrow: acc.hasAnyWidthGrow || isGrow
+      };
     },
     {
       availableWidth: 100,
       remainingColsNum: 0,
-      hasAnyWidthGrow: false,
+      hasAnyWidthGrow: false
     }
-  )
+  );
 
   if (availableWidth < 0 && !hasAnyWidthGrow) {
-    const normalization = -(100 / availableWidth)
-    cols = cols.map(col => ({
+    const normalization = -(100 / availableWidth);
+    cols = cols.map((col) => ({
       ...col,
-      width:
-        typeof col.width === 'number' ? col.width * normalization : col.width,
-    }))
+      width: typeof col.width === "number" ? col.width * normalization : col.width
+    }));
   }
 
-  return cols.map(col => {
-    const definedWidth =
-      typeof col.width === 'number' ? `${col.width}%` : col.width
+  return cols.map((col) => {
+    const definedWidth = typeof col.width === "number" ? `${col.width}%` : col.width;
 
     return {
       element: col.element,
       width: col.hasDefinedWidth
         ? definedWidth
-        : `${Math.floor(
-            Math.max(0, availableWidth) / (hideEmptyCols ? 1 : remainingColsNum)
-          )}%`,
-      hasDefinedWidth: col.hasDefinedWidth,
-    }
-  })
-}
+        : `${Math.floor(Math.max(0, availableWidth) / (hideEmptyCols ? 1 : remainingColsNum))}%`,
+      hasDefinedWidth: col.hasDefinedWidth
+    };
+  });
+};
 
 function isReactElement(element: any): element is ReactElement {
-  return !!element && element.props
+  return !!element && element.props;
 }
 
-export const useResponsiveWidth = (
-  children: React.ReactNode,
-  options: DistributedWidthOptions
-) => {
-  const { device } = useDevice()
+export const useResponsiveWidth = (children: React.ReactNode, options: DistributedWidthOptions) => {
+  const { device } = useDevice();
 
-  const isPhone = device === 'phone'
+  const isPhone = device === "phone";
 
-  const { preserveLayoutOnMobile = false, hideEmptyCols = false } =
-    options || {}
+  const { preserveLayoutOnMobile = false, hideEmptyCols = false } = options || {};
 
-  const cols: ColWithWidth[] = React.Children.toArray(children).map(col => {
+  const cols: ColWithWidth[] = React.Children.toArray(children).map((col) => {
     if (!isReactElement(col)) {
       return {
         element: col,
         width: 0,
         hasDefinedWidth: false,
-        isResponsive: true,
-      }
+        isResponsive: true
+      };
     }
 
-    const width = parseWidth(
-      col.props.width || (col.props.blockProps && col.props.blockProps.width)
-    )
+    const width = parseWidth(col.props.width || (col.props.blockProps && col.props.blockProps.width));
 
-    if (width && typeof width === 'object') {
+    if (width && typeof width === "object") {
       return {
         element: col,
         width: isPhone ? width.mobile || 0 : width.desktop || 0,
         hasDefinedWidth: true,
-        isResponsive: true,
-      }
+        isResponsive: true
+      };
     }
 
     if (!preserveLayoutOnMobile && isPhone) {
@@ -113,33 +99,32 @@ export const useResponsiveWidth = (
         element: col,
         width: 0,
         hasDefinedWidth: false,
-        isResponsive: false,
-      }
+        isResponsive: false
+      };
     }
 
-    if (typeof width === 'number' || typeof width === 'string') {
+    if (typeof width === "number" || typeof width === "string") {
       return {
         element: col,
         width,
         hasDefinedWidth: true,
-        isResponsive: false,
-      }
+        isResponsive: false
+      };
     }
 
     return {
       element: col,
       width: 0,
       hasDefinedWidth: false,
-      isResponsive: true,
-    }
-  })
+      isResponsive: true
+    };
+  });
 
-  const isAnyColResponsive = cols.some(col => col.isResponsive)
-  const breakOnMobile =
-    !preserveLayoutOnMobile && isPhone && !isAnyColResponsive
+  const isAnyColResponsive = cols.some((col) => col.isResponsive);
+  const breakOnMobile = !preserveLayoutOnMobile && isPhone && !isAnyColResponsive;
 
   return {
     cols: distributeAvailableWidth(cols, { hideEmptyCols }),
-    breakOnMobile,
-  }
-}
+    breakOnMobile
+  };
+};

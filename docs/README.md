@@ -1,93 +1,89 @@
-📢 Don't fork this project. Use, [contribute](https://github.com/vtex-apps/flex-layout), or open issues through [Store Discussion](https://github.com/vtex-apps/store-discussion).
-
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
-[![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors-)
-
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-
 # Flex Layout
 
-Flex Layout is a **layout structure** built within VTEX IO Store Framework. It allows building complex custom layouts using the concept of **rows** and **columns**, setting the desired block structure and positioning in a page.
+> Este componente es una copia del [Flex Layout oficial de VTEX](https://github.com/vtex-apps/flex-layout), ajustado y mantenido por **[commente.me](https://commente.me)**.
 
-![Screen Shot 2019-08-21 at 4 05 19 PM](https://cdn.jsdelivr.net/gh/vtexdocs/dev-portal-content@main/images/vtex-flex-layout-0.png) _Example of a page layout built using Flex Layout, following the one row with two columns model_
+Flex Layout es una **estructura de diseño** construida dentro del VTEX IO Store Framework. Permite crear layouts personalizados y complejos utilizando el concepto de **filas** y **columnas**, definiendo la estructura y el posicionamiento de los bloques en una página.
 
-## Configuration
+![Ejemplo de layout](https://cdn.jsdelivr.net/gh/vtexdocs/dev-portal-content@main/images/vtex-flex-layout-0.png)
+_Ejemplo de un layout de página construido con Flex Layout — modelo de una fila con dos columnas_
 
-**Flex Layout has two basic building blocks**: `flex-layout.row` and `flex-layout.col`. You should **never** use `flex-layout`.
+## Configuración
 
-If you are already familiar with the [`flexbox`](https://css-tricks.com/snippets/css/a-guide-to-flexbox/) layout used in CSS, Flex Layout should be easy to grasp since this is what `flex-layout.row` and `flex-layout.col` are using under the hood.
+**Flex Layout tiene dos bloques base**: `flex-layout.row` y `flex-layout.col`. **Nunca** uses el bloque `flex-layout` directamente.
 
-You can use **any** array of blocks as children for `flex-layout.row` and `flex-layout.col`.
+Si ya conoces el modelo [`flexbox`](https://css-tricks.com/snippets/css/a-guide-to-flexbox/) de CSS, Flex Layout será fácil de entender, ya que `flex-layout.row` y `flex-layout.col` lo utilizan internamente.
 
-The props below support [`responsive-values`](https://github.com/vtex-apps/responsive-values), meaning that you can define different values for the same prop based on device screen size, such as mobile and desktop.
+Puedes usar **cualquier** array de bloques como hijos de `flex-layout.row` y `flex-layout.col`.
+
+Las props marcadas con `responsive` admiten el formato [`responsive-values`](https://github.com/vtex-apps/responsive-values), lo que permite definir valores distintos según el tamaño de pantalla (`mobile` y `desktop`).
+
+---
 
 ### `flex-layout.row`
 
-| Prop name                  | Type                                                           | Description                                                                                                                                                                                                                   | Default value |
-| -------------------------- | -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| `blockClass`               | `String`                                                       | Block container class. The set value of this prop functions as a block identifier for CSS customizations. (                                                                                                                   | `""`          |
-| `borderColor`              | `String`                                                       | The color of the border.                                                                                                                                                                                                      | `undefined`   |
-| `borderWidth`              | `0...5`                                                        | A `number` or `string` magnitude for applying the `bw` Tachyons token to the row.                                                                                                                                             | `undefined`   |
-| `border`                   | `String \| String[]`                                          | An array to define on which sides of the row a border should apply (`top`, `right`, `bottom`, `left`, or `all`).                                                                                                              | `undefined`   |
-| `colGap`                   | `0...10`                                                       | A `number` or `string` magnitude for applying the `pr` Tachyons token to the columns in the `flex-layout.row`.                                                                                                                | `undefined`   |
-| `colSizing`                | `equal`&#124;`auto`                                            | Controls the width of the columns in the `flex-layout.row`.                                                                                                                                                                   | `equal`       |
-| `fullWidth`                | `Boolean`                                                      | Whether the component should occupy all the available width from its parent.                                                                                                                                                  | `false`       |
-| `horizontalAlign`          | `left`&#124;`right`&#124;`center`&#124;`between`&#124;`around` | Controls horizontal alignment for the items in the `flex-layout.row`. It defaults to `between` if `colSizing` is `auto` and to `left` otherwise.                                                                              | `left`        |
-| `colJustify`               | `enum`                                                         | Controls the space between columns and borders of the `flex-layout.row`, following the `justify-content` CSS property. Possible values are `between` (no space added between borders and columns) and `around` (space added). | `between`     |
-| `marginBottom`             | `0...10`                                                       | A `number` or `string` magnitude for applying the `mb` Tachyons token to the row.                                                                                                                                             | `undefined`   |
-| `marginTop`                | `0...10`                                                       | A `number` or `string` magnitude for applying the `mt` Tachyons token to the row.                                                                                                                                             | `undefined`   |
-| `paddingBottom`            | `0...10`                                                       | A `number` or `string` magnitude for applying the `pb` Tachyons token to the row.                                                                                                                                             | `undefined`   |
-| `paddingTop`               | `0...10`                                                       | A `number` or `string` magnitude for applying the `pt` Tachyons token to the row.                                                                                                                                             | `undefined`   |
-| `preserveLayoutOnMobile`   | `Boolean`                                                      | Whether the `flex-layout.row` should break into a column layout on mobile.                                                                                                                                                    | `false`       |
-| `preventHorizontalStretch` | `Boolean`                                                      | Prevents the row from stretching horizontally to fill its parent's width.                                                                                                                                                     | `false`       |
-| `preventVerticalStretch`   | `Boolean`                                                      | Prevents the row from stretching vertically to fill its parent's height with the `items-stretch` token.                                                                                                                       | `false`       |
-| `rowGap`                   | `0...10`                                                       | A `number` or `string` magnitude for applying the `pb` Tachyons token to columns in the `flex-layout.row`.                                                                                                                    | `undefined`   |
-| `htmlId`                   | `String`                                                       | This prop adds an HTML id to `flexRow`. This allows accessing a page section using links.                                                                                             | `undefined`   |
-| `arialabel` | `string` | Aria-label to be included for accessibility purposes |  `undefined` |
+| Prop | Tipo | Descripción | Valor por defecto |
+| --- | --- | --- | --- |
+| `blockClass` | `String` | Clase del contenedor del bloque. Se usa como identificador para personalizaciones CSS. | `""` |
+| `border` | `String \| String[]` | Define en qué lados de la fila se aplica el borde: `top`, `right`, `bottom`, `left` o `all`. | `undefined` |
+| `borderColor` | `String` | Color del borde. | `undefined` |
+| `borderWidth` | `0...5` | Magnitud numérica o string para el token Tachyons `bw` aplicado a la fila. | `undefined` |
+| `colGap` | `0...10` | Espaciado horizontal entre las columnas de la fila. Equivale al token `pr` de Tachyons. | `undefined` |
+| `colSizing` | `equal` &#124; `auto` | Controla el ancho de las columnas en la fila. | `equal` |
+| `colJustify` | `between` &#124; `around` &#124; `left` &#124; `right` &#124; `center` | Controla el espacio entre columnas y bordes de la fila, siguiendo la propiedad CSS `justify-content`. | `between` |
+| `fullWidth` | `Boolean` | Si el componente debe ocupar todo el ancho disponible de su contenedor padre. | `false` |
+| `horizontalAlign` | `left` &#124; `right` &#124; `center` &#124; `between` &#124; `around` | Alineación horizontal de los ítems en la fila. Por defecto es `between` si `colSizing` es `auto`, o `left` en caso contrario. | `left` |
+| `htmlId` | `String` | Agrega un atributo `id` HTML al `flexRow`, permitiendo el acceso a secciones de la página mediante anclas. | `undefined` |
+| `arialabel` | `String` | Etiqueta `aria-label` para fines de accesibilidad. | `undefined` |
+| `marginBottom` | `0...10` | Token Tachyons `mb` aplicado a la fila. | `undefined` |
+| `marginTop` | `0...10` | Token Tachyons `mt` aplicado a la fila. | `undefined` |
+| `paddingBottom` | `0...10` | Token Tachyons `pb` aplicado a la fila. | `undefined` |
+| `paddingTop` | `0...10` | Token Tachyons `pt` aplicado a la fila. | `undefined` |
+| `preserveLayoutOnMobile` | `Boolean` | Si es `false`, la fila se convierte en una columna en mobile. | `false` |
+| `preventHorizontalStretch` | `Boolean` | Evita que la fila se estire horizontalmente para llenar el ancho del padre. | `false` |
+| `preventVerticalStretch` | `Boolean` | Evita que la fila se estire verticalmente usando `items-stretch`. | `false` |
+| `rowGap` | `0...10` | Espaciado vertical entre columnas cuando se apilan en mobile. Equivale al token `pb` de Tachyons. | `undefined` |
+
+---
 
 ### `flex-layout.col`
 
-| Prop name                | Type                              | Description                                                                                                                  | Default value |
-| ------------------------ | --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| `blockClass`             | `String`                          | Block container class. The set value of this prop functions as a block identifier for CSS customizations                     | `""`          |
-| `borderColor`            | `String`                          | The color of the border.                                                                                                     | `undefined`   |
-| `borderWidth`            | `0...5`                           | A `number` or `string` magnitude for applying the `bw` Tachyons token to the column.                                         | `undefined`   |
-| `border`                 | `String \| String[]`             | An array to define on which sides of the row a border should apply (`top`, `right`, `bottom`, `left`, or `all`).             | `undefined`   |
-| `horizontalAlign`        | `left`&#124;`right`&#124;`center` | Controls horizontal alignment for the items in the `flex-layout.col`.                                                        | `left`        |
-| `marginLeft`             | `0...10`                          | A `number` or `string` magnitude for applying the `ml` Tachyons token to the column.                                         | `undefined`   |
-| `marginRight`            | `0...10`                          | A `number` or `string` magnitude for applying the `mr` Tachyons token to the column.                                         | `undefined`   |
-| `paddingLeft`            | `0...10`                          | A `number` or `string` magnitude for applying the `pl` Tachyons token to the column.                                         | `undefined`   |
-| `paddingRight`           | `0...10`                          | A `number` or `string` magnitude for applying the `pr` Tachyons token to the column.                                         | `undefined`   |
-| `preventVerticalStretch` | `Boolean`                         | Prevents the row from stretching vertically to fill its parent's height with `height: 100%`, using `height: "auto"` instead. | `false`       |
-| `rowGap`                 | `0...10`                          | A `number` or `string` magnitude for applying the `pb` Tachyons token to rows in the `flex-layout.col`.                      | `undefined`   |
-| `verticalAlign`          | `top`&#124;`middle`&#124;`bottom` | Controls vertical alignment for the items in the `flex-layout.col`.                                                          | `top`         |
-| `width`                  | `"0...100%"`&#124;`"grow"`        | Sets the width of the column. Accepts either a percentage or `"grow"`.                                                       | `undefined`   |
-| `arialabel` | `string` | Aria-label to be included for accessibility purposes |  `undefined` |
+| Prop | Tipo | Descripción | Valor por defecto |
+| --- | --- | --- | --- |
+| `blockClass` | `String` | Clase del contenedor del bloque. Se usa como identificador para personalizaciones CSS. | `""` |
+| `border` | `String \| String[]` | Define en qué lados de la columna se aplica el borde: `top`, `right`, `bottom`, `left` o `all`. | `undefined` |
+| `borderColor` | `String` | Color del borde. | `undefined` |
+| `borderWidth` | `0...5` | Magnitud numérica o string para el token Tachyons `bw` aplicado a la columna. | `undefined` |
+| `arialabel` | `String` | Etiqueta `aria-label` para fines de accesibilidad. | `undefined` |
+| `horizontalAlign` | `left` &#124; `right` &#124; `center` | Alineación horizontal de los ítems dentro de la columna. | `left` |
+| `marginLeft` | `0...10` | Token Tachyons `ml` aplicado a la columna. | `undefined` |
+| `marginRight` | `0...10` | Token Tachyons `mr` aplicado a la columna. | `undefined` |
+| `paddingLeft` | `0...10` | Token Tachyons `pl` aplicado a la columna. | `undefined` |
+| `paddingRight` | `0...10` | Token Tachyons `pr` aplicado a la columna. | `undefined` |
+| `preventVerticalStretch` | `Boolean` | Evita que la columna se estire verticalmente, usando `height: auto` en lugar de `height: 100%`. | `false` |
+| `rowGap` | `0...10` | Espaciado vertical entre las filas dentro de la columna. Equivale al token `pb` de Tachyons. | `undefined` |
+| `verticalAlign` | `top` &#124; `middle` &#124; `bottom` | Alineación vertical de los ítems dentro de la columna. | `top` |
+| `width` | `"0...100%"` &#124; `"grow"` | Ancho de la columna. Acepta un porcentaje o el valor `"grow"` (ocupa el espacio disponible). | `undefined` |
 
-## App behavior
+---
 
-- The highest level in a flex layout is **always** a row. Therefore, you can only add a `flex-layout.col` inside a `flex-layout.row` — never as a first-level block.
-- Every row and column can have as **many levels as needed**.
-- When creating levels, you have to **alternate between rows and columns**. You can only place columns within a row and rows within a column.
-- Keep in mind that the structure that you set in your flex layout does not only affect your code organization, but will also reflect in the way that blocks will be shown and managed through the Site Editor admin. Therefore, it is always important to **take the organization of both code and Site Editor into account when planning to apply the flex layout** to a page.
+## Comportamiento
 
-To better understand Flex Layout's practical operation, you can access the recipe for [Using Flex Layout](https://developers.vtex.com/docs/guides/vtex-io-documentation-using-flex-layout)
+- El nivel más alto en un flex layout es **siempre** una fila (`flex-layout.row`). Por lo tanto, solo puedes agregar un `flex-layout.col` dentro de un `flex-layout.row` — nunca como bloque de primer nivel.
+- Cada fila y columna puede tener **tantos niveles como sea necesario**.
+- Al crear niveles, debes **alternar entre filas y columnas**. Solo puedes colocar columnas dentro de una fila y filas dentro de una columna.
+- La estructura que defines en tu flex layout no solo afecta la organización del código, sino también cómo los bloques se muestran y gestionan en el Site Editor. Es importante **considerar tanto el código como el Site Editor al planificar el uso de flex layout** en una página.
 
-## Customization
+Para entender mejor el funcionamiento práctico de Flex Layout, puedes acceder a la guía [Using Flex Layout](https://developers.vtex.com/docs/guides/vtex-io-documentation-using-flex-layout).
 
-To apply CSS customizations to this and other blocks, follow the instructions given in the recipe for [Using CSS Handles for store customization](https://developers.vtex.com/docs/guides/vtex-io-documentation-using-css-handles-for-store-customization).
+---
 
-| CSS Handles      |
-| ---------------- |
-| `flexColChild`   |
-| `flexCol`        |
-| `flexRowContent` |
-| `flexRow`        |
+## Personalización
 
-## Contributors ✨
+Para aplicar personalizaciones CSS a este y otros bloques, consulta la guía [Using CSS Handles for store customization](https://developers.vtex.com/docs/guides/vtex-io-documentation-using-css-handles-for-store-customization).
 
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind are welcome!
-
-
-
+| CSS Handle       | Descripción |
+| ---------------- | ----------- |
+| `flexRow`        | Elemento raíz del `flex-layout.row`. Contiene el `id` y `aria-label`. |
+| `flexRowContent` | Contenedor flex de la fila. Aplicado en el mismo elemento que `flexRow`. |
+| `flexCol`        | Elemento raíz del `flex-layout.col`. |
+| `flexColChild`   | Aplicado en el mismo elemento que `flexCol`. Disponible para personalizaciones independientes. |
