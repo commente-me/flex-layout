@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { Component, FunctionComponent, ReactElement } from "react";
 import { TachyonsScaleInput } from "../modules/valuesParser";
 
 declare global {
@@ -22,16 +22,6 @@ declare global {
     rowGap: TachyonsScaleInput;
   }
 
-  interface Flex {
-    stretchContent: boolean;
-    grow: boolean;
-  }
 
-  type BorderBase = "top" | "right" | "bottom" | "left" | "all";
 
-  interface Border {
-    border: BorderBase | BorderBase[];
-    borderWidth: TachyonsScaleInput;
-    borderColor: string;
-  }
 }

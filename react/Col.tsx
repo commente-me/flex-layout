@@ -6,7 +6,6 @@ import { useResponsiveValues } from "vtex.responsive-values";
 import { FlexLayoutContextProvider, FlexLayoutTypes, useFlexLayoutContext } from "./components/FlexLayoutContext";
 import {
   TachyonsScaleInput,
-  parseBorders,
   parseMargins,
   parsePaddings,
   parseTachyonsGroup,
@@ -25,9 +24,9 @@ enum HorizontalAlign {
   center = "center"
 }
 
-interface Props extends Flex, Gap, Border {
+interface Props extends Gap {
   blockClass?: string;
-  height?: string;
+  height?: TachyonsScaleInput;
   marginLeft: TachyonsScaleInput;
   marginRight: TachyonsScaleInput;
   paddingLeft: TachyonsScaleInput;
@@ -61,23 +60,21 @@ const CSS_HANDLES = ["flexCol", "flexColChild"] as const;
 
 const Col: StorefrontFunctionComponent<Props> = ({ children, ...props }) => {
   const {
+    blockClass,
     colGap,
     rowGap,
     marginLeft,
     marginRight,
     paddingLeft,
     paddingRight,
-    border,
-    borderWidth,
-    borderColor,
-    grow,
+    height,
     preventVerticalStretch,
     verticalAlign,
     horizontalAlign
   } = useResponsiveValues(props) as Props;
 
   const context = useFlexLayoutContext();
-  const handles = useCssHandles(CSS_HANDLES);
+  const handles = useCssHandles(CSS_HANDLES, { blockClass });
 
   if (context.parent === FlexLayoutTypes.NONE) {
     return null;
@@ -90,19 +87,20 @@ const Col: StorefrontFunctionComponent<Props> = ({ children, ...props }) => {
 
   const margins = parseMargins({ marginLeft, marginRight });
   const paddings = parsePaddings({ paddingLeft, paddingRight });
-  const borders = parseBorders({ border, borderWidth, borderColor });
 
   const vertical = parseVerticalAlign(verticalAlign);
   const horizontal = parseHorizontalAlign(horizontalAlign);
 
+  const parsedHeight = height !== undefined
+    ? toSpacingValue(parseTachyonsGroup({ height }).height)
+    : undefined;
+
   return (
     <FlexLayoutContextProvider parent={FlexLayoutTypes.COL} {...gaps}>
       <div
-        className={`${handles.flexCol} ${handles.flexColChild} ${
-          grow ? "flex-grow-1" : ""
-        } ${margins} ${paddings} ${borders} ${vertical} ${horizontal} flex flex-column h-100 w-100`}
+        className={`${handles.flexCol} ${handles.flexColChild} ${margins} ${paddings} ${vertical} ${horizontal} flex flex-column h-100 w-100`}
         style={{
-          height: preventVerticalStretch || verticalAlign ? "auto" : "100%",
+          height: parsedHeight ?? (preventVerticalStretch || verticalAlign ? "auto" : "100%"),
           rowGap: gaps.rowGap > 0 ? toSpacingValue(gaps.rowGap) : undefined
         }}
       >

@@ -2,11 +2,6 @@ import React, { ReactElement } from "react";
 import { useDevice } from "vtex.device-detector";
 import { parseWidth } from "../modules/valuesParser";
 
-interface DistributedWidthOptions {
-  preserveLayoutOnMobile?: boolean;
-  hideEmptyCols?: boolean;
-}
-
 interface ColWithWidth {
   element: React.ReactNode;
   width: number | string;
@@ -22,7 +17,7 @@ interface ColWithWidth {
  * There are 3 columns. The user sets the width for the first one to 50%.
  * This function will set the widths of the second and third columns to 25%.
  */
-const distributeAvailableWidth = (cols: ColWithWidth[], { hideEmptyCols = false } = {}) => {
+const distributeAvailableWidth = (cols: ColWithWidth[]) => {
   const { availableWidth, remainingColsNum, hasAnyWidthGrow } = cols.reduce(
     (acc, col) => {
       const isGrow = col.width === "grow";
@@ -56,7 +51,7 @@ const distributeAvailableWidth = (cols: ColWithWidth[], { hideEmptyCols = false 
       element: col.element,
       width: col.hasDefinedWidth
         ? definedWidth
-        : `${Math.floor(Math.max(0, availableWidth) / (hideEmptyCols ? 1 : remainingColsNum))}%`,
+        : `${Math.floor(Math.max(0, availableWidth) / remainingColsNum)}%`,
       hasDefinedWidth: col.hasDefinedWidth
     };
   });
@@ -66,12 +61,10 @@ function isReactElement(element: any): element is ReactElement {
   return !!element && element.props;
 }
 
-export const useResponsiveWidth = (children: React.ReactNode, options: DistributedWidthOptions) => {
+export const useResponsiveWidth = (children: React.ReactNode) => {
   const { device } = useDevice();
 
   const isPhone = device === "phone";
-
-  const { preserveLayoutOnMobile = false, hideEmptyCols = false } = options || {};
 
   const cols: ColWithWidth[] = React.Children.toArray(children).map((col) => {
     if (!isReactElement(col)) {
@@ -94,7 +87,7 @@ export const useResponsiveWidth = (children: React.ReactNode, options: Distribut
       };
     }
 
-    if (!preserveLayoutOnMobile && isPhone) {
+    if (isPhone) {
       return {
         element: col,
         width: 0,
@@ -121,10 +114,10 @@ export const useResponsiveWidth = (children: React.ReactNode, options: Distribut
   });
 
   const isAnyColResponsive = cols.some((col) => col.isResponsive);
-  const breakOnMobile = !preserveLayoutOnMobile && isPhone && !isAnyColResponsive;
+  const breakOnMobile = isPhone && !isAnyColResponsive;
 
   return {
-    cols: distributeAvailableWidth(cols, { hideEmptyCols }),
+    cols: distributeAvailableWidth(cols),
     breakOnMobile
   };
 };

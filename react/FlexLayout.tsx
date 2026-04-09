@@ -7,7 +7,6 @@ import Container from "vtex.store-components/Container";
 import { FlexLayoutContextProvider, FlexLayoutTypes, useFlexLayoutContext } from "./components/FlexLayoutContext";
 import { useResponsiveWidth } from "./hooks/responsiveWidth";
 import {
-  parseBorders,
   parseMargins,
   parsePaddings,
   parseTachyonsGroup,
@@ -38,7 +37,7 @@ const HorizontalAlignments = {
   [ColJustify.right]: "justify-end"
 };
 
-export interface Props extends Flex, Gap, Border {
+export interface Props extends Gap {
   children?: React.ReactNode;
   blockClass?: string;
   fullWidth?: boolean;
@@ -48,13 +47,10 @@ export interface Props extends Flex, Gap, Border {
   marginBottom: TachyonsScaleInput;
   paddingTop: TachyonsScaleInput;
   paddingBottom: TachyonsScaleInput;
-  preserveLayoutOnMobile?: boolean;
   preventHorizontalStretch?: boolean;
   preventVerticalStretch?: boolean;
   colSizing?: ColSizing;
   horizontalAlign?: ColJustify;
-  colJustify?: ColJustify;
-  experimentalHideEmptyCols?: boolean;
 }
 
 const CSS_HANDLES = ["flexRow", "flexRowContent"] as const;
@@ -62,7 +58,8 @@ const CSS_HANDLES = ["flexRow", "flexRowContent"] as const;
 const FlexLayout: StorefrontFunctionComponent<Props> = (props) => {
   const responsiveProps = useResponsiveValues(props) as Props;
   const context = useFlexLayoutContext();
-  const handles = useCssHandles(CSS_HANDLES);
+  const { blockClass } = responsiveProps;
+  const handles = useCssHandles(CSS_HANDLES, { blockClass });
   const intl = useIntl();
 
   const {
@@ -76,16 +73,10 @@ const FlexLayout: StorefrontFunctionComponent<Props> = (props) => {
     marginBottom,
     paddingTop,
     paddingBottom,
-    border,
-    borderWidth,
-    borderColor,
-    preserveLayoutOnMobile,
     preventHorizontalStretch,
     preventVerticalStretch,
     horizontalAlign,
     colSizing,
-    colJustify = ColJustify.between,
-    experimentalHideEmptyCols = false
   } = responsiveProps;
 
   const gaps = parseTachyonsGroup({
@@ -95,20 +86,14 @@ const FlexLayout: StorefrontFunctionComponent<Props> = (props) => {
 
   const margins = parseMargins({ marginTop, marginBottom });
   const paddings = parsePaddings({ paddingTop, paddingBottom });
-  const borders = parseBorders({ border, borderWidth, borderColor });
 
-  const { cols, breakOnMobile } = useResponsiveWidth(children, {
-    preserveLayoutOnMobile,
-    hideEmptyCols: experimentalHideEmptyCols
-  });
+  const { cols, breakOnMobile } = useResponsiveWidth(children);
 
   const isSizingAuto = colSizing === ColSizing.auto;
 
-  let horizontalAlignClass = isSizingAuto ? HorizontalAlignments[colJustify] : HorizontalAlignments.left;
-
-  if (horizontalAlign != null) {
-    horizontalAlignClass = HorizontalAlignments[horizontalAlign];
-  }
+  const horizontalAlignClass = horizontalAlign
+    ? HorizontalAlignments[horizontalAlign]
+    : HorizontalAlignments[ColJustify.left];
 
   const isTopLevel = context.parent === FlexLayoutTypes.NONE;
   const shouldUseContainer = !fullWidth && isTopLevel;
@@ -124,7 +109,7 @@ const FlexLayout: StorefrontFunctionComponent<Props> = (props) => {
         aria-label={ariaLabel}
         className={`${handles.flexRow} ${handles.flexRowContent} ${
           breakOnMobile ? "flex-none flex-ns" : "flex"
-        } ${margins} ${paddings} ${borders} ${horizontalAlignClass} items-stretch w-100`}
+        } ${margins} ${paddings} ${horizontalAlignClass} items-stretch w-100`}
         style={gaps.colGap > 0 ? { columnGap: toSpacingValue(gaps.colGap) } : undefined}
       >
         {cols.map((col, i) => (
@@ -134,7 +119,7 @@ const FlexLayout: StorefrontFunctionComponent<Props> = (props) => {
               breakOnMobile ? `pb${gaps.rowGap} pb0-ns` : ""
             } ${preventVerticalStretch ? "" : "items-stretch"} ${
               preventHorizontalStretch ? "" : styles.stretchChildrenWidth
-            } ${col.width === "grow" ? "flex-grow-1" : ""} ${experimentalHideEmptyCols ? styles.col : ""} flex`}
+            } ${col.width === "grow" ? "flex-grow-1" : ""} flex`}
             style={{
               width:
                 preventHorizontalStretch || (isSizingAuto && !col.hasDefinedWidth)
