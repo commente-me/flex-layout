@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -r \"className\\\\|style=\" /Users/zeluizr/Sites/www/components/flex-layout/react/*.tsx)",
+      "Bash(find /Users/zeluizr/Sites/www/components/flex-layout -type f ! -path \"*/node_modules/*\" ! -path \"*/.git/*\" -exec ls -lh {} \\\\;)",
+      "Bash(awk '{print $5, $9}')",
+      "Bash(sort -k2)",
+      "Bash(grep -h -o '\\\\\\(flex\\\\|items-\\\\|justify-\\\\|pb\\\\|pt\\\\|pl\\\\|pr\\\\|mt\\\\|mb\\\\|ml\\\\|mr\\\\|w-100\\\\|h-100\\\\|pb0-ns\\\\|flex-grow-1\\\\|flex-none\\\\|flex-ns\\\\|flex-column\\\\|items-stretch\\\\|items-center\\\\|items-end\\\\|justify-between\\\\|justify-around\\\\|justify-start\\\\|justify-center\\\\|justify-end\\\\\\)[^ `\"]*' /Users/zeluizr/Sites/www/components/flex-layout/react/*.tsx)"
+    ]
+  }
+}

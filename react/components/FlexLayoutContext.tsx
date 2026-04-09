@@ -8,36 +8,17 @@ export enum FlexLayoutTypes {
 
 export interface FlexLayoutContextProps {
   parent: FlexLayoutTypes;
-  colGap: number;
-  rowGap: number;
 }
 
-export type FlexLayoutContextValue = number | FlexLayoutTypes;
-
-export type FlexLayoutContext = FlexLayoutContextProps & {
-  [key: string]: FlexLayoutContextValue;
-};
-
-const FlexLayoutContext = React.createContext<FlexLayoutContext>({
-  parent: FlexLayoutTypes.NONE,
-  colGap: 0,
-  rowGap: 0
+const FlexLayoutContext = React.createContext<FlexLayoutContextProps>({
+  parent: FlexLayoutTypes.NONE
 });
 
 export const FlexLayoutContextProvider: FunctionComponent<FlexLayoutContextProps> = ({
   parent,
-  colGap,
-  rowGap,
   children
 }) => {
-  const value = useMemo(
-    () => ({
-      parent,
-      colGap,
-      rowGap
-    }),
-    [parent, colGap, rowGap]
-  );
+  const value = useMemo(() => ({ parent }), [parent]);
 
   return <FlexLayoutContext.Provider value={value}>{children}</FlexLayoutContext.Provider>;
 };

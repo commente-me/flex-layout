@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { useDevice } from "vtex.device-detector";
 import { parseWidth } from "../modules/valuesParser";
 
@@ -57,8 +57,8 @@ const distributeAvailableWidth = (cols: ColWithWidth[]) => {
   });
 };
 
-function isReactElement(element: any): element is ReactElement {
-  return !!element && element.props;
+function isReactElement(element: unknown): element is React.ReactElement {
+  return React.isValidElement(element);
 }
 
 export const useResponsiveWidth = (children: React.ReactNode) => {

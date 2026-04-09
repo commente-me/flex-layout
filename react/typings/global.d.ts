@@ -1,5 +1,4 @@
 import { Component, FunctionComponent, ReactElement } from "react";
-import { TachyonsScaleInput } from "../modules/valuesParser";
 
 declare global {
   interface StorefrontFunctionComponent<P = {}> extends FunctionComponent<P> {
@@ -16,12 +15,4 @@ declare global {
     schema?: object;
     getSchema?(props: P): object;
   }
-
-  interface Gap {
-    colGap: TachyonsScaleInput;
-    rowGap: TachyonsScaleInput;
-  }
-
-
-
 }
